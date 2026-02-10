@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/nodes",
+  "definitions": {
+    "nodes": {
+      "type": "object",
+      "properties": {
+        "subject": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "level": {
+          "type": "number"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "subject",
+        "slug",
+        "title"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
