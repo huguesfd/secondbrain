@@ -6,6 +6,7 @@ const nodes = defineCollection({
     subject: z.string(),
     slug: z.string(),
     title: z.string(),
+    level: z.number(),
   }),
 });
 
