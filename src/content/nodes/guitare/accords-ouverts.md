@@ -1,7 +1,7 @@
 ---
-title: "Accords ouverts"
-subject: "guitare"
-slug: "accords-ouverts"
+subject: guitare
+slug: accords-ouverts
+title: Accords ouverts
 level: 1
 ---
 
