@@ -6,7 +6,4 @@ level: 1
 ---
 
 ## Résumé
-## Notes
-## Exercices
-## Ressources
-- [Grille d'accords](/assets/grilles/accords.pdf)
+...
