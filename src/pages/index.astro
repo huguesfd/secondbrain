@@ -1,17 +1,25 @@
 ---
+import subjects from "../data/subjects.json";
+import nodes from "../data/nodes.json";
+import edges from "../data/edges.json";
+import { computeStatuses, subjectProgress } from "../lib/graph";
 
+const statuses = computeStatuses(nodes, edges);
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<html>
+  <head><title>Second cerveau</title></head>
+  <body>
+    <h1>Sujets</h1>
+    <ul>
+      {subjects.map((s) => {
+        const p = subjectProgress(s.slug, nodes, statuses);
+        const pct = Math.round(p.progress * 100);
+        return (
+          <li>
+            <a href={`/${s.slug}/`}>{s.title}</a> — {pct}% ({p.mastered}/{p.total})
+          </li>
+        );
+      })}
+    </ul>
+  </body>
 </html>

@@ -1,0 +1,17 @@
+[
+  {
+    "subjectSlug": "guitare",
+    "nodeSlug": "accords-ouverts",
+    "title": "Accords ouverts",
+    "level": 1,
+    "manualStatus": null,
+    "tags": ["main-gauche"],
+    "resources": [
+      { "id": "grille-accords", "type": "PDF", "title": "Grille d'accords", "href": "/assets/grilles/accords.pdf", "note": "" }
+    ],
+    "createdAt": "2026-02-10T00:00:00Z",
+    "updatedAt": "2026-02-10T00:00:00Z",
+    "startedAt": null,
+    "masteredAt": null
+  }
+]

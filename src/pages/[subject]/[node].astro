@@ -1,0 +1,33 @@
+---
+import subjects from "../../../data/subjects.json";
+import nodes from "../../../data/nodes.json";
+import edges from "../../../data/edges.json";
+import { computeStatuses, nodeKey } from "../../../lib/graph";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const all = nodes.map(n => ({ params: { subject: n.subjectSlug, node: n.nodeSlug } }));
+  return all;
+}
+
+const { subject, node } = Astro.params;
+
+const md = await getCollection("nodes");
+const entry = md.find(e => e.data.subject === subject && e.data.slug === node);
+if (!entry) throw new Error(`Markdown introuvable pour ${subject}/${node}`);
+
+const subjectNodes = nodes.filter(n => n.subjectSlug === subject);
+const subjectEdges = edges.filter(e => e.subjectSlug === subject);
+const statuses = computeStatuses(subjectNodes, subjectEdges);
+const st = statuses.get(nodeKey(subject, node));
+const { Content } = await entry.render();
+---
+<html>
+  <head><title>{entry.data.title}</title></head>
+  <body>
+    <a href={`/${subject}/`}>← {subject}</a>
+    <h1>{entry.data.title}</h1>
+    <p>Status: {st}</p>
+    <Content />
+  </body>
+</html>

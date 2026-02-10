@@ -1,0 +1,51 @@
+---
+import subjects from "../../data/subjects.json";
+import nodes from "../../data/nodes.json";
+import edges from "../../data/edges.json";
+import CytoscapeGraph from "../../components/CytoscapeGraph.jsx";
+import { computeStatuses, nodeKey, subjectProgress } from "../../lib/graph";
+
+export async function getStaticPaths() {
+  return subjects.map((s) => ({ params: { subject: s.slug } }));
+}
+
+const { subject } = Astro.params;
+const subjectNodes = nodes.filter(n => n.subjectSlug === subject);
+const subjectEdges = edges.filter(e => e.subjectSlug === subject);
+
+const statuses = computeStatuses(subjectNodes, subjectEdges);
+const p = subjectProgress(subject, subjectNodes, statuses);
+
+const graphNodes = subjectNodes.map(n => ({
+  data: { id: nodeKey(n.subjectSlug, n.nodeSlug), label: n.title, slug: n.nodeSlug }
+}));
+
+const graphEdges = subjectEdges.map(e => ({
+  data: { source: nodeKey(subject, e.from), target: nodeKey(subject, e.to) }
+}));
+---
+<html>
+  <head><title>{subject}</title></head>
+  <body>
+    <a href="/">←</a>
+    <h1>{subject}</h1>
+    <p>Progression: {Math.round(p.progress * 100)}%</p>
+
+    <div style="height:520px;border:1px solid #ddd;">
+      <CytoscapeGraph client:only="react" nodes={graphNodes} edges={graphEdges} subject={subject} />
+    </div>
+
+    <h2>Nœuds</h2>
+    <ul>
+      {subjectNodes.map(n => {
+        const key = nodeKey(n.subjectSlug, n.nodeSlug);
+        const st = statuses.get(key);
+        return (
+          <li>
+            <a href={`/${subject}/${n.nodeSlug}/`}>{n.title}</a> — {st}
+          </li>
+        );
+      })}
+    </ul>
+  </body>
+</html>

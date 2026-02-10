@@ -1,0 +1,3 @@
+[
+  { "subjectSlug": "guitare", "from": "accords-ouverts", "to": "accords-barres", "type": "PREREQUISITE" }
+]
